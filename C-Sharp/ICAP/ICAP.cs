@@ -98,10 +98,14 @@ namespace ICAPNameSpace
         /// <exception cref="ICAPException">Thrown when error occurs in communication with server</exception>
         /// <exception cref="IOException">Thrown when error occurs in reading file</exception>
         /// <exception cref="SocketException">Thrown if socket is closed unexpectedly.</exception>
-        public bool scanFile(String filepath)
+        public bool scanFile(String filepath, long seekoffset = 0)
         {
             using (FileStream fileStream = new FileStream(filepath, FileMode.Open))
             {
+                if (seekoffset != 0)
+                {
+                    fileStream.Seek(seekoffset, SeekOrigin.Begin);
+                }
                 int fileSize = (int)fileStream.Length;
 
                 //First part of header
