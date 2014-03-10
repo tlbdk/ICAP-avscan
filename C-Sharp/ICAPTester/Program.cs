@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Reflection;
 
 namespace ConsoleApplication1
 {
@@ -13,33 +14,25 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            ICAPNameSpace.ICAP icap = new ICAPNameSpace.ICAP("192.168.1.5", 1344, "avscan");
 
-            String[] files = new String[]{
-                @"C:\Users\Mads\Downloads\eicar.com.txt"
-                ,@"C:\Users\Mads\Downloads\eicar.com2.txt"
-                ,@"C:\Users\Mads\Downloads\eicar.com.txt"
-                ,@"C:\Users\Mads\Downloads\eicar.com2.txt"
-                ,@"C:\Users\Mads\Downloads\eicar.com.txt"
-                ,@"C:\Users\Mads\Downloads\eicar.com2.txt"
-                ,@"C:\Users\Mads\Downloads\Git-1.8.4-preview20130916.exe"
-            };
-
-            foreach (String file in files)
+            string rootpath = Path.GetFullPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "../../../../../");
+            try
             {
-                try
-                {
-                    Console.Write(file + ": ");
-                    bool result = icap.scanFile(file);
-                    Console.Write(result + "\n");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Could not scan file " + file + ":" + ex);
-                }
+                ICAPNameSpace.ICAP icap = new ICAPNameSpace.ICAP("192.168.1.5", 1344, "avscan");
+                
+                bool result = icap.scanFile(rootpath + "eicar.txt");
+                Console.WriteLine("Scan eicar test sample:" + result);
+
+                result = icap.scanFile(rootpath + "README.md");
+                Console.WriteLine("Scan eicar test sample:" + result);
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not scan file " + ex);
             }
 
-            System.Threading.Thread.Sleep(1000);
+            Console.ReadKey();
         }
     }
 }
