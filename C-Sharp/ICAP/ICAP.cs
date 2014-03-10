@@ -55,7 +55,7 @@ namespace ICAPNameSpace
             IPAddress ipAddress = IPAddress.Parse(serverIP);
             IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
-            // Create a TCP/IP  socket.
+            // Create a TCP/IP socket.
             sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sender.Connect(remoteEP);
 
@@ -65,8 +65,8 @@ namespace ICAPNameSpace
             }
             else
             {
-                String parseMe = getOptions();
-                Dictionary<string, string> responseMap = parseHeader(parseMe);
+                String icapheaders = getOptions();
+                Dictionary<string, string> responseMap = parseHeader(icapheaders);
 
                 responseMap.TryGetValue("StatusCode", out tempString);
                 if (tempString != null)
@@ -237,7 +237,7 @@ namespace ICAPNameSpace
         /// <summary>
         /// Receive an expected ICAP header as response of a request. The returned String should be parsed with parseHeader()
         /// </summary>
-        /// <param name="terminator">Relative or absolute filepath to a file.</parm>
+        /// <param name="terminator"></parm>
         /// <exception cref="ICAPException">Thrown when error occurs in communication with server</exception>
         /// <returns>String of the raw response</returns>
         private String getHeader(String terminator)
@@ -312,8 +312,7 @@ namespace ICAPNameSpace
         /// </summary>
         public class ICAPException : Exception
         {
-            public ICAPException(string message)
-                : base(message)
+            public ICAPException(string message) : base(message)
             {
             }
 

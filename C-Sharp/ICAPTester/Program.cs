@@ -13,8 +13,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            ICAPNameSpace.ICAP icap = new ICAPNameSpace.ICAP("192.168.1.5",1344,"avscan");
-
+            ICAPNameSpace.ICAP icap = new ICAPNameSpace.ICAP("192.168.1.5", 1344, "avscan");
 
             String[] files = new String[]{
                 @"C:\Users\Mads\Downloads\eicar.com.txt"
